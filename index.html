@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Your IP Address >:D</h1>
+    <p id="ip-display">Fetching your IP...</p>
+
+    <script>
+        // Replace with your backend's URL
+        const backendUrl = "http://vm4430.kaj.pouta.csc.fi:8351/my-ip";
+
+        // Fetch the IP address from the backend
+        fetch(backendUrl)
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById("ip-display").textContent = `Your IP: ${data.ip}`;
+            })
+            .catch(error => {
+                console.error("Error fetching IP:", error);
+                document.getElementById("ip-display").textContent = "Failed to fetch IP.";
+            });
+    </script>
+</body>
+</html>
