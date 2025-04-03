@@ -6,10 +6,36 @@
     <title>Document</title>
 </head>
 <body>
-    <h1>Available roooms</h1>
-    <p id="rooms">Fetching rooms...</p>
+    <h1>Book a room</h1>
+    
+    <select name="room_id" id="roomSelect">
+        <option value="" disabled selected>Select a room</option>
+    </select>
+    <input type="date"><!--välj datum-->
+    <input type="text"><!--tilläggsinfo ex. gäst namn-->
+    <input type="button"><!--spara bokning-->
 
+
+    
     <script>
+        (async () => {
+            try {
+                const rep = await fetch("http://vm4430.kaj.pouta.csc.fi:8352/rooms");
+                const rooms = await rep.json();
+
+                const roomSelect = document.getElementById("roomSelect");
+
+                rooms.forEach(room => {
+                    const option = document.createElement("option");
+                    option.value = room.room_number; 
+                    option.textContent = `Room ${room.room_number} - ${room.price}€, Type: ${room.type}`;
+                    roomSelect.appendChild(option);
+                });
+            } catch (error) {
+                console.error("Error fetching rooms:", error);
+            }
+        })();
+        /*
         // Replace with your backend's URL
         const backendUrl = "http://vm4430.kaj.pouta.csc.fi:8352/rooms";
 
@@ -31,6 +57,7 @@
                 console.error("Error fetching rooms:", error);
                 document.getElementById("rooms").textContent = "Failed to fetch rooms.";
             });
+            */
     </script>
 </body>
 </html>
